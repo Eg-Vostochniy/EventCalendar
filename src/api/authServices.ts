@@ -6,6 +6,7 @@ export const authAPI = {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({username, password})
-        })).json()
+        }))
+        .json()
     }
 }
