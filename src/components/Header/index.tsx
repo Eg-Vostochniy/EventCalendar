@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import { useAppDispatch } from '../../hooks/useAppDispatch'
+import { useAppSelector } from '../../hooks/useAppSelector'
 import { Search } from './Search'
 
 const Wrapper = styled.div`
@@ -24,15 +26,16 @@ const Logout = styled.span`
 `
 
 export const Header: React.FC = () => {
-    const isAuth = true
-    const uName = 'user'
+    const {isAuth, owner} = useAppSelector(state => state.authReducer)
+    const {logout} = useAppDispatch()
+
     return (
         <Wrapper>
             {
                 isAuth ? 
                     <LoginWrapper>
-                        <Logout>Logout</Logout>
-                        <UserName>{uName}</UserName>
+                        <Logout onClick={logout}>Logout</Logout>
+                        <UserName>{owner.username}</UserName>
                     </LoginWrapper> :
                     <span>
                         Login
@@ -41,9 +44,9 @@ export const Header: React.FC = () => {
             <div>
 
             </div>
-            
-            <Search />               
-            
+            {
+                isAuth && <Search />  
+            }      
         </Wrapper>
     )
 }

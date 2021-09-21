@@ -1,10 +1,11 @@
 import { Redirect, Route, Switch } from 'react-router'
 import styled from './App.module.css'
 import { Header } from './components/Header'
+import { useAppSelector } from './hooks/useAppSelector'
 import { IRoute, Path, privateRoute, publicRoute } from './routes'
 
 export const App: React.FC = () => {
-  const isAuth = true
+  const {isAuth} = useAppSelector(state => state.authReducer)
   return (
     <div className={styled.wrapper}>
         <Header />

@@ -9,17 +9,21 @@ const CalendarWrapper = styled.div<{withRows?: boolean}>`
         `grid-template-rows: repeat(6, 1fr);`}
     grid-gap: 1px;
     background-color: #404040;
+    ${props => !props.withRows && 
+        `border-bottom: 1px solid #404040;`}
 `
 const WeekDays = styled.span`
     background-color: #1F1E21;
-    color: grey;
+    color: #929292;
+    font-weight: bold;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding: 0 5px 5px 0;
 `
+
 type Props = {
-    daysList: Moment[] 
+    daysList: Moment[]
 }
 
 export const CalendarGrid: React.FC<Props> = ({daysList}) => {
@@ -35,8 +39,8 @@ export const CalendarGrid: React.FC<Props> = ({daysList}) => {
                 {
                     daysList.map((day) => 
                         <CalendarCell
-                            day={day}
                             key={day.unix()}
+                            day={day}
                         />
                     )
                 }

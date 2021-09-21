@@ -1,9 +1,12 @@
+import { authReducer } from './auth/reducer';
+import { calendarReducer } from './calendar/reducer';
 import { createStore } from 'redux'
 import { Action, combineReducers, applyMiddleware } from 'redux';
 import thunk, { ThunkAction } from 'redux-thunk';
 
 const rootReducer = combineReducers({
-
+    calendarReducer,
+    authReducer
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunk))

@@ -1,9 +1,10 @@
-type Props = {
-    currentMonth: string
-    currentYear: string
-}
+import { memo } from "react"
 
-export const CurrentDate: React.FC<Props> = ({currentMonth, currentYear}) => {
-    return <span>{currentMonth + ' ' + currentYear}</span>
-}
+export const CurrentMonth: React.FC<{currentMonth: string}> = memo(({currentMonth}) => {
+    return <span style={{paddingRight: '5.5px'}}>{currentMonth}</span>
+})
+export const CurrentYear: React.FC<{currentYear: string}> = memo(({currentYear}) => {
+    return <span>{currentYear}</span>
+})
+
 

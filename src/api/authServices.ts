@@ -1,5 +1,5 @@
 export const authAPI = {
-    login: async (username: string, password: string) => {
+    login: async (username: string, password: string): Promise<boolean> => {
         return await (await fetch('/api/login', {
             method: 'POST',
             headers: {

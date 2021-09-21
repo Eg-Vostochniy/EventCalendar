@@ -56,14 +56,19 @@ const users = [
     { id: 25, username: "user24"},
     { id: 26, username: "user25"}
 ]
+const events = [
+    {id: 0, title: 'dsfdsf', description: 'fdsfdsfsffsdf', date: '06-29-2021', holders: ['user', 'user1']},
+    {id: 1, title: 'dsfdsfsdf', description: 'fdsfasdasddsfsffsdf', date: '08-15-2021', holders: ['user1', 'user20', 'user14']},
+    {id: 2, title: 'dsf', description: 'fdsfdsfasdsffsdf', date: '08-30-2021', holders: ['user9', 'user1']},
+    {id: 3, title: 'dsf', description: 'fdsfdsfasdsffsdf', date: '09-03-2021', holders: ['user1', 'user10']},
+    {id: 4, title: 'dsf', description: 'fdsfdsfasdsffsdf', date: '10-11-2021', holders: ['user1', 'user5', 'user24']},
+]
 
 createServer({
     routes() {
         this.namespace = "api"    
-        this.get("/users", () => ({
-            users: users
-        }))
-        this.post('/login', (schema, request) => {
+        this.get('/users', () => users)
+        this.post('/login', (_, request) => {
             let attrs = JSON.parse(request.requestBody)
             if(attrs){
                 const user = __users.find(user => user.username === attrs.username && 
@@ -71,6 +76,20 @@ createServer({
                 if(user) return true
                 return false                   
             }
+        })
+        this.get('/events/:from/:to/:username', (_, request) => {
+            let {from, to, username} = request.params
+            from = events.find((f) => f.date <= from)
+            to = events.find((t) => t.date >= to)
+            let slicedEvents = events.slice(from.id, to.id + 1)
+            let userEvents = slicedEvents.filter((e) => {
+                if(e.holders.find((h) => h === username)){
+                    return e
+                }
+                return null
+            })
+            
+            return userEvents
         })
     }
 })

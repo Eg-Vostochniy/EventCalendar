@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { CurrentDate } from "./CurrentDate"
+import { CurrentMonth, CurrentYear } from "./CurrentDate"
 
 const Wrapper = styled.div`
     background-color: #1F1E21;
@@ -41,7 +41,10 @@ export const CalendarHeader: React.FC<Props> = ({
     return (
         <Wrapper>
             <DateNavigation>
-                <CurrentDate currentMonth={currentMonth} currentYear={currentYear} />
+                <div>
+                    <CurrentMonth currentMonth={currentMonth}/>
+                    <CurrentYear currentYear={currentYear}/>
+                </div>
                 <div>
                     <Button onClick={prevMonth}>&lt;</Button>
                     <Button onClick={todayHandler}>Today</Button>
