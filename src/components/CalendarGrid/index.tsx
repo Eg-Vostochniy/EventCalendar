@@ -1,5 +1,6 @@
 import moment, { Moment } from 'moment'
 import styled from 'styled-components'
+import { useAppSelector } from '../../hooks/useAppSelector'
 import { CalendarCell } from './CalendarCell'
 
 const CalendarWrapper = styled.div<{withRows?: boolean}>`
@@ -27,6 +28,7 @@ type Props = {
 }
 
 export const CalendarGrid: React.FC<Props> = ({daysList}) => {
+    const {events} = useAppSelector(state => state.calendarReducer)
     return (
         <div>
             <CalendarWrapper>
@@ -37,12 +39,21 @@ export const CalendarGrid: React.FC<Props> = ({daysList}) => {
             </CalendarWrapper>
             <CalendarWrapper withRows>
                 {
-                    daysList.map((day) => 
-                        <CalendarCell
-                            key={day.unix()}
-                            day={day}
-                        />
-                    )
+                    daysList.map((day) => {
+                        let isEvent = events.filter(e => e.date === day.format('MM-DD-YYYY')) 
+                        return (
+                            isEvent.length !== 0 ? 
+                                <CalendarCell
+                                    event={isEvent}
+                                    key={day.unix()}
+                                    day={day}
+                                /> : 
+                                <CalendarCell
+                                    key={day.unix()}
+                                    day={day}
+                                />
+                        )
+                    })
                 }
             </CalendarWrapper>
         </div>

@@ -10,21 +10,18 @@ const totalDaysInGrid = 42
 export const Calendar: React.FC = () => {
     const [today, setToday] = useState(moment())
     const {fetchEvents} = useAppDispatch()
-    const {events} = useAppSelector(state => state.calendarReducer)
+    const {username} = useAppSelector(state => state.authReducer.owner)
     
     const currentMonth = today.format('MMMM')
     const currentYear = today.format('YYYY')
-
-    const formatStartDay = today.clone().startOf('month').startOf('week').format('MM-DD-YYYY')
-    const formatEndDay = today.clone().endOf('month').endOf('week').format('MM-DD-YYYY')
 
     const startDay = today.clone().startOf('month').startOf('week').subtract(1, 'day')
     const daysList = [...Array(totalDaysInGrid)].map(() => startDay.add(1, 'day').clone())
     
     useEffect(() => {
-        fetchEvents(formatStartDay, formatEndDay, 'user1')
+        fetchEvents(username)
         //eslint-disable-next-line
-    }, [formatStartDay, formatEndDay])
+    }, [username])
     
     const prevHandler = () => {
         setToday(today.subtract(1, 'month').clone())

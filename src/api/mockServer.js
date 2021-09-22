@@ -57,11 +57,14 @@ const users = [
     { id: 26, username: "user25"}
 ]
 const events = [
-    {id: 0, title: 'dsfdsf', description: 'fdsfdsfsffsdf', date: '06-29-2021', holders: ['user', 'user1']},
-    {id: 1, title: 'dsfdsfsdf', description: 'fdsfasdasddsfsffsdf', date: '08-15-2021', holders: ['user1', 'user20', 'user14']},
-    {id: 2, title: 'dsf', description: 'fdsfdsfasdsffsdf', date: '08-30-2021', holders: ['user9', 'user1']},
-    {id: 3, title: 'dsf', description: 'fdsfdsfasdsffsdf', date: '09-03-2021', holders: ['user1', 'user10']},
-    {id: 4, title: 'dsf', description: 'fdsfdsfasdsffsdf', date: '10-11-2021', holders: ['user1', 'user5', 'user24']},
+    {id: 0, title: 'Погулять', description: 'fdsfdsfsffsdf', date: '09-22-2021', holders: ['user', 'user1']},
+    {id: 1, title: 'Покушать', description: 'fdsfasdasddsfsffsdf', date: '08-15-2021', holders: ['user11', 'user20', 'user14']},
+    {id: 2, title: 'Починить машину', description: 'fdsfdsfasdsffsdf', date: '08-30-2021', holders: ['user9', 'user17']},
+    {id: 3, title: 'Съездить в лес', description: 'fdsfdsfasdsffsdf', date: '09-03-2021', holders: ['user20', 'user10']},
+    {id: 4, title: 'Море', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', holders: ['user1', 'user5', 'user24']},
+    {id: 5, title: 'Купить телефон', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', holders: ['user1', 'user5', 'user24']},
+    {id: 6, title: 'Сходить в школу', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', holders: ['user1', 'user5', 'user24']},
+    {id: 7, title: 'Набрать воды', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', holders: ['user1', 'user5', 'user24']}
 ]
 
 createServer({
@@ -77,12 +80,12 @@ createServer({
                 return false                   
             }
         })
-        this.get('/events/:from/:to/:username', (_, request) => {
-            let {from, to, username} = request.params
-            from = events.find((f) => f.date <= from)
-            to = events.find((t) => t.date >= to)
-            let slicedEvents = events.slice(from.id, to.id + 1)
-            let userEvents = slicedEvents.filter((e) => {
+        this.get('/events/:username', (_, request) => {
+            let {username} = request.params
+            //from = events.find((f) => f.date <= from)
+            //to = events.find((t) => t.date >= to)
+            //let slicedEvents = events.slice(from.id, to.id + 1)
+            let userEvents = events.filter((e) => {
                 if(e.holders.find((h) => h === username)){
                     return e
                 }

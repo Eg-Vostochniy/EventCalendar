@@ -8,8 +8,12 @@ export const calendarActions = {
 }
 
 export const calendarThunks = {
-    fetchEvents: (fromDate: string, toDate: string, username: string) => async (dispatch: AppDispatch) => {
-        const response = await eventsApi.getCurrentMonthEvents(fromDate, toDate, username)
-        dispatch(calendarActions.setEvents(response))
+    fetchEvents: (username: string | null) => async (dispatch: AppDispatch) => {
+        try {
+            const response = await eventsApi.getCurrentMonthEvents(username)
+            dispatch(calendarActions.setEvents(response))
+        } catch(e: any) {
+            console.log(e)
+        }
     }
 }

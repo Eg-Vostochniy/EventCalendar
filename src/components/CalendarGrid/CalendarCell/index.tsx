@@ -1,6 +1,7 @@
 import moment, { Moment } from 'moment'
-import { memo } from 'react'
 import styled from 'styled-components'
+import { IEvent } from '../../../models/IEvent'
+import { CellEvent } from './CellEvents'
 
 const Cell = styled.div<{isCurrentDay: boolean, isWeekend: boolean, isCurrentMonth: boolean}>`
     min-width: 140px;
@@ -36,8 +37,15 @@ const DayWrapper = styled.div<{isCurrentDay: boolean, isFirstDay: boolean}>`
         ` : null
     }
 `
+const CellEventWrapper = styled.div`
+    max-width: 130px;
+    max-height: 40px;
+    margin: 3px;
+    font-size: 12px;
+    overflow-y: scroll;
+`
 
-export const CalendarCell: React.FC<{day: Moment}> = memo(({day}) => {
+export const CalendarCell: React.FC<{day: Moment, event?: IEvent[]}> = ({day, event}) => {
     const isCurrentDay = (cDay: Moment): boolean => moment().isSame(cDay, 'day')
     const isCurrentMonth = (cMonth: Moment): boolean => moment().isSame(cMonth, 'month')
     const isFirstDayOfMonth = (firstDay: Moment): string | null => {
@@ -63,6 +71,11 @@ export const CalendarCell: React.FC<{day: Moment}> = memo(({day}) => {
                     <div>{day.format('D')}</div>
                 </DayWrapper>
             </RowInCell>
+            <CellEventWrapper>
+                {
+                    event && event.map(e => <CellEvent key={e.id} event={e}/>)
+                }
+            </CellEventWrapper>
         </Cell>
     )
-}, (prev: any, next: any) => prev._d === next._d)
+}

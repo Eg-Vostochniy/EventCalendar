@@ -1,3 +1,4 @@
+import { calendarActions } from './../calendar/actions';
 import { authAPI } from './../../api/authServices';
 import { userAPI } from './../../api/userService';
 import { SET_IS_AUTH, SET_USERS, SET_OWNER } from './types';
@@ -15,12 +16,29 @@ export const authThunks = {
         const response = await userAPI.getUsers()
         dispatch(authActions.setUsers(response))
     },
-    login: (username: string, password: string) => async (dispatch: AppDispatch) => {
+    login: (username: string | null, password: string | null) => async (dispatch: AppDispatch) => {
+        try {
         const response = await authAPI.login(username, password)
+        sessionStorage.setItem('auth', 'true')
+        sessionStorage.setItem('username', `${username}`)
+        sessionStorage.setItem('password', `${password}`)
+        dispatch(authActions.setOwner({username, password}))
         dispatch(authActions.setIsAuth(response))
+        } catch(e: any) {
+            console.log(e)
+        }
     },
-    logout: () => (dispatch: AppDispatch) => {
-        dispatch(authActions.setOwner({username: '', password: ''}))
-        dispatch(authActions.setIsAuth(false))
+    logout: () => async (dispatch: AppDispatch) => {
+        try {
+            const response = await authAPI.login(null, null)
+            sessionStorage.removeItem('auth')
+            sessionStorage.removeItem('username')
+            sessionStorage.removeItem('password')
+            dispatch(authActions.setOwner({username: '', password: ''}))
+            dispatch(calendarActions.setEvents([]))
+            dispatch(authActions.setIsAuth(response))
+        } catch(e: any) {
+            console.log(e)
+        }
     }
 }
