@@ -10,7 +10,7 @@ const Wrapper = styled.div`
     background-color: #1F1E21;
     color: #E6E6E6;
 `
-const LoginWrapper = styled.div`
+const LogoutWrapper = styled.div`
     padding-left: 10px;
 `
 const UserName = styled.span`
@@ -24,6 +24,13 @@ const Logout = styled.span`
     text-transform: uppercase;
     font-size: 14px;
 `
+const LoginWrapper = styled.div`
+    color: #a30e0e;
+    padding: 6px 0 6px 12px;
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+`
 
 export const Header: React.FC = () => {
     const {isAuth, owner} = useAppSelector(state => state.authReducer)
@@ -33,17 +40,14 @@ export const Header: React.FC = () => {
         <Wrapper>
             {
                 isAuth ? 
-                    <LoginWrapper>
+                    <LogoutWrapper>
                         <Logout onClick={logout}>Logout</Logout>
                         <UserName>{owner.username}</UserName>
-                    </LoginWrapper> :
-                    <span>
+                    </LogoutWrapper> :
+                    <LoginWrapper>
                         Login
-                    </span>
+                    </LoginWrapper>
             }
-            <div>
-
-            </div>
             {
                 isAuth && <Search />  
             }      

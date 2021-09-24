@@ -91,8 +91,11 @@ createServer({
                 }
                 return null
             })
-            
             return userEvents
+        })
+        this.post('/events', (_, request) => {
+            let attrs = JSON.parse(request.requestBody)
+            attrs && events.push(attrs)
         })
     }
 })

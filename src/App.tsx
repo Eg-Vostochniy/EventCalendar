@@ -2,13 +2,17 @@ import { useEffect } from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 import styled from './App.module.css'
 import { Header } from './components/Header'
+import { ModalWindow } from './components/ModalWindow'
 import { useAppDispatch } from './hooks/useAppDispatch'
 import { useAppSelector } from './hooks/useAppSelector'
 import { IRoute, Path, privateRoute, publicRoute } from './routes'
 
 export const App: React.FC = () => {
   const {isAuth} = useAppSelector(state => state.authReducer)
+  const {isModal} = useAppSelector(state => state.calendarReducer)
+
   const {login} = useAppDispatch()
+  
   useEffect(() => {
     if(sessionStorage.getItem('auth')){
       login(sessionStorage.getItem('username'), sessionStorage.getItem('password'))
@@ -17,6 +21,9 @@ export const App: React.FC = () => {
   }, [])
   return (
     <div className={styled.wrapper}>
+          {
+            isModal ? <ModalWindow /> : null
+          }
         <Header />
         {
           isAuth ? 

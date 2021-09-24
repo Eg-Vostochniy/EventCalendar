@@ -1,6 +1,7 @@
 import moment, { Moment } from 'moment'
 import styled from 'styled-components'
 import { useAppSelector } from '../../hooks/useAppSelector'
+import { getCurrentDate } from '../../utils/getCurrentDate'
 import { CalendarCell } from './CalendarCell'
 
 const CalendarWrapper = styled.div<{withRows?: boolean}>`
@@ -29,18 +30,19 @@ type Props = {
 
 export const CalendarGrid: React.FC<Props> = ({daysList}) => {
     const {events} = useAppSelector(state => state.calendarReducer)
+
     return (
         <div>
             <CalendarWrapper>
                 {
                     [...Array(7)].map((_, index) => 
-                        <WeekDays key={index}>{moment().day(index).format('ddd')}</WeekDays>) 
+                        <WeekDays key={index}>{getCurrentDate(moment().day(index), 'ddd')}</WeekDays>) 
                 }
             </CalendarWrapper>
             <CalendarWrapper withRows>
                 {
                     daysList.map((day) => {
-                        let isEvent = events.filter(e => e.date === day.format('MM-DD-YYYY')) 
+                        let isEvent = events.filter(e => e.date === getCurrentDate(day, 'MM-DD-YYYY')) 
                         return (
                             isEvent.length !== 0 ? 
                                 <CalendarCell

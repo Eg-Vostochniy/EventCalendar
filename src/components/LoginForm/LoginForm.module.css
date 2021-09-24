@@ -1,0 +1,39 @@
+.Wrapper {
+  min-width: 300px;
+  min-height: 200px;
+  background-color: #2b2a2c;
+}
+.FormWrapper {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
+.Label {
+  display: grid;
+  color: rgb(163, 167, 167);
+  margin-bottom: 10px;
+}
+.Label span {
+  margin-bottom: 3px;
+}
+.Label input {
+  padding: 4px;
+  background-color: rgb(145, 142, 142);
+  border: 2px solid rgb(46, 34, 34);
+  outline: none;
+}
+.Wrapper button {
+  background-color: rgb(121, 56, 56);
+  border: 1px solid rgb(172, 166, 166);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  color: #232224;
+  font-size: 18px;
+  padding: 1px 9px;
+}
+.ButtonWrapper {
+  text-align: center;
+  padding: 10px 0 30px;
+}
