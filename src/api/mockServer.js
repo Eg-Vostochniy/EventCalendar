@@ -57,14 +57,14 @@ const users = [
     { id: 26, username: "user25"}
 ]
 const events = [
-    {id: 0, title: 'Погулять', description: 'fdsfdsfsffsdf', date: '09-22-2021', holders: ['user', 'user1']},
-    {id: 1, title: 'Покушать', description: 'fdsfasdasddsfsffsdf', date: '08-15-2021', holders: ['user11', 'user20', 'user14']},
-    {id: 2, title: 'Починить машину', description: 'fdsfdsfasdsffsdf', date: '08-30-2021', holders: ['user9', 'user17']},
-    {id: 3, title: 'Съездить в лес', description: 'fdsfdsfasdsffsdf', date: '09-03-2021', holders: ['user20', 'user10']},
-    {id: 4, title: 'Море', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', holders: ['user1', 'user5', 'user24']},
-    {id: 5, title: 'Купить телефон', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', holders: ['user1', 'user5', 'user24']},
-    {id: 6, title: 'Сходить в школу', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', holders: ['user1', 'user5', 'user24']},
-    {id: 7, title: 'Набрать воды', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', holders: ['user1', 'user5', 'user24']}
+    {id: 0, creator: 'user1', title: 'Event', description: 'fdsfdsfsffsdf', date: '09-22-2021', guests: ['user']},
+    {id: 1, creator: 'user1', title: 'Event', description: 'fdsfasdasddsfsffsdf', date: '08-15-2021', guests: ['user11', 'user20', 'user14']},
+    {id: 2, creator: 'user1', title: 'Event', description: 'fdsfdsfasdsffsdf', date: '08-30-2021', guests: ['user9', 'user17']},
+    {id: 3, creator: 'user1', title: 'Event', description: 'fdsfdsfasdsffsdf', date: '09-03-2021', guests: ['user20', 'user10']},
+    {id: 4, creator: 'user1', title: 'Event', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', guests: ['user5', 'user24']},
+    {id: 5, creator: 'user1', title: 'Event', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', guests: ['user5', 'user24']},
+    {id: 6, creator: 'user1', title: 'Event', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', guests: ['user5', 'user24']},
+    {id: 7, creator: 'user1', title: 'Event', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', guests: ['user5', 'user24']}
 ]
 
 createServer({
@@ -86,7 +86,7 @@ createServer({
             //to = events.find((t) => t.date >= to)
             //let slicedEvents = events.slice(from.id, to.id + 1)
             let userEvents = events.filter((e) => {
-                if(e.holders.find((h) => h === username)){
+                if(e.guests.find((h) => h === username) || e.creator === username){
                     return e
                 }
                 return null
@@ -95,7 +95,9 @@ createServer({
         })
         this.post('/events', (_, request) => {
             let attrs = JSON.parse(request.requestBody)
-            attrs && events.push(attrs)
+            let id = events.length
+            attrs && events.push(Object.assign(attrs, {id: id}))
+            console.log(events)
         })
     }
 })

@@ -1,7 +1,8 @@
 export interface IEvent {
     id?: number
+    creator: string | null
     title: string
     description: string
     date: string
-    holders: string[]
+    guests: string[]
 }

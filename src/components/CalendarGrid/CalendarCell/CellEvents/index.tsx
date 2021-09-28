@@ -1,5 +1,4 @@
 import { memo, useState } from 'react'
-import styled from 'styled-components'
 import { IEvent } from '../../../../models/IEvent'
 
 export const CellEvent: React.FC<{event: IEvent}> = memo(({event}) => {

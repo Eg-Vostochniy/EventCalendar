@@ -47,17 +47,18 @@ const Title = styled.span`
 export const ModalWindow: React.FC<{}> = () => {
     const wrapperRef = useRef<HTMLDivElement>(null)
     const {setIsModal, fetchUsers, addNewEvent} = useAppDispatch()
-    const {currentDate} = useAppSelector(state => state.calendarReducer)
-    const {users} = useAppSelector(state => state.authReducer)
+    const {currentDate, events} = useAppSelector(state => state.calendarReducer)
+    const {users, owner} = useAppSelector(state => state.authReducer)
 
     useClickOutside(wrapperRef)
 
     const submit = (values: IEvent) => {
-        addNewEvent(values, 'user1')
+        addNewEvent(values)
         setIsModal(false)
     }
     useEffect(() => {
         fetchUsers()
+        //eslint-disable-next-line
     }, []) 
     
     return (
@@ -66,7 +67,12 @@ export const ModalWindow: React.FC<{}> = () => {
                 <CloseModal onClick={() => setIsModal(false)}>X</CloseModal>
                 <Title>Add new event</Title>
                 <Formik
-                initialValues={{ title: '', description: '', date: currentDate, holders: ['']}}
+                initialValues={{id: events.length, 
+                                title: '', 
+                                creator: owner.username, 
+                                description: '', 
+                                date: currentDate, 
+                                guests: ['']}}
                 onSubmit={submit}
             >
                 <Form>
@@ -77,7 +83,7 @@ export const ModalWindow: React.FC<{}> = () => {
                     
                     <Field type="input" disabled name="date"/>
                 
-                    <Field as="select" multiple name="holders">
+                    <Field as="select" multiple name="guests">
                         {
                             users && users.map(a => <option
                                                         key={a.id} 

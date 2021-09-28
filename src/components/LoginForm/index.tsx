@@ -1,12 +1,12 @@
 import { ErrorMessage, Field, Form, Formik } from "formik"
 import { useAppDispatch } from "../../hooks/useAppDispatch"
-import { IUser } from "../../models/IUser"
 import styled from './LoginForm.module.css'
+
 
 export const LoginForm: React.FC = () => {
     const {login} = useAppDispatch()
 
-    const submit = (values: IUser) => {
+    const submit = (values: {username: string | null, password: string | null}) => {
         login(values.username, values.password)
     }
 

@@ -21,9 +21,9 @@ export const App: React.FC = () => {
   }, [])
   return (
     <div className={styled.wrapper}>
-          {
-            isModal ? <ModalWindow /> : null
-          }
+        {
+          isModal ? <ModalWindow /> : null
+        }
         <Header />
         {
           isAuth ? 
