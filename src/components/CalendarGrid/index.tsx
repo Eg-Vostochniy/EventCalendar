@@ -1,4 +1,5 @@
 import moment, { Moment } from 'moment'
+import { memo } from 'react'
 import styled from 'styled-components'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { getCurrentDate } from '../../utils/getCurrentDate'
@@ -36,7 +37,7 @@ export const CalendarGrid: React.FC<Props> = ({daysList}) => {
             <CalendarWrapper>
                 {
                     [...Array(7)].map((_, index) => 
-                        <WeekDays key={index}>{getCurrentDate(moment().day(index), 'ddd')}</WeekDays>) 
+                        <Weeks key={index} index={index}/>) 
                 }
             </CalendarWrapper>
             <CalendarWrapper withRows>
@@ -44,7 +45,7 @@ export const CalendarGrid: React.FC<Props> = ({daysList}) => {
                     daysList.map((day) => {
                         let isEvent = events.filter(e => e.date === getCurrentDate(day, 'MM-DD-YYYY')) 
                         return (
-                            isEvent.length !== 0 ? 
+                            isEvent.length !== 0 && (day > moment() || moment().isSame(day, 'day')) ? 
                                 <CalendarCell
                                     event={isEvent}
                                     key={day.unix()}
@@ -61,3 +62,9 @@ export const CalendarGrid: React.FC<Props> = ({daysList}) => {
         </div>
     )
 }
+
+const Weeks: React.FC<{index: number}> = memo(({index}) => {
+    return (
+        <WeekDays>{getCurrentDate(moment().day(index), 'ddd')}</WeekDays>
+    )
+})

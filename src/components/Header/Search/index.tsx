@@ -1,5 +1,8 @@
+import moment from 'moment'
 import { useState } from 'react'
 import styled from 'styled-components'
+import { useAppSelector } from '../../../hooks/useAppSelector'
+import { getCurrentDate } from '../../../utils/getCurrentDate'
 
 const Input = styled.input`
     background-color: #404040;
@@ -11,17 +14,54 @@ const Input = styled.input`
     padding: 2.6px 6px;
     font-size: 15px;
 `
+const SearchedEvents = styled.div`
+    color: black;
+    background-color: #ffffffa8;
+    position: absolute;
+    width: 140px;
+    max-height: 170px;
+    overflow: scroll;
+    z-index: 6;
+    top: 12%;
+    right: 4%;
+`
+const EventDiv = styled.div<{isAvailable?: boolean}>`
+    ${props => props.isAvailable && `color: red;`}
+`
 
 export const Search: React.FC = () => {
     const [searchValue, setSearchValue] = useState('')
+    const {events} = useAppSelector(state => state.calendarReducer)
+    const filteredEvents = events.filter(e => e.title.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1)
+    
+    const handleChange = (e: any) => {
+        setSearchValue(e.target.value)
+    }
     
     return (
         <>
             <Input
                 placeholder='Search'  
                 value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
+                onChange={handleChange}
             />
+            {
+                searchValue !== '' &&
+                <SearchedEvents>
+                    {
+                        filteredEvents.length !== 0 ?
+                            filteredEvents.map(e => {
+                                return Number(e.date.split('-').join('')) < Number(getCurrentDate(moment(), 'MMDDYYYY')) ?
+                                    <EventDiv 
+                                        isAvailable 
+                                        key={e.id}>{e.title}
+                                    </EventDiv> :
+                                    <EventDiv key={e.id}>{e.title}</EventDiv>
+                            }) :
+                            <div>No events with this name</div> 
+                    }
+                </SearchedEvents>
+            }
         </>
     )
 }

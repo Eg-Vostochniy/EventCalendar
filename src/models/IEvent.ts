@@ -1,5 +1,5 @@
 export interface IEvent {
-    id?: number
+    id: number
     creator: string | null
     title: string
     description: string

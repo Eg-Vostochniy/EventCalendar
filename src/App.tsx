@@ -9,7 +9,7 @@ import { IRoute, Path, privateRoute, publicRoute } from './routes'
 
 export const App: React.FC = () => {
   const {isAuth} = useAppSelector(state => state.authReducer)
-  const {isModal} = useAppSelector(state => state.calendarReducer)
+  const {isModalEventsAdder} = useAppSelector(state => state.calendarReducer)
 
   const {login} = useAppDispatch()
   
@@ -22,7 +22,10 @@ export const App: React.FC = () => {
   return (
     <div className={styled.wrapper}>
         {
-          isModal ? <ModalWindow /> : null
+          isModalEventsAdder ? <ModalWindow /> : null
+        }
+        {
+          isModalEventsAdder ? <ModalWindow /> : null
         }
         <Header />
         {

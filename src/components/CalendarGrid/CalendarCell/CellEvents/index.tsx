@@ -1,25 +1,11 @@
-import { memo, useState } from 'react'
-import { IEvent } from '../../../../models/IEvent'
+import { memo } from 'react'
+import { useAppDispatch } from '../../../../hooks/useAppDispatch'
 
-export const CellEvent: React.FC<{event: IEvent}> = memo(({event}) => {
-    const [isModal, setIsModal] = useState(false)
+export const CellEvent: React.FC<{eventTitle: string}> = memo(({eventTitle}) => {
+    const {setIsModal} = useAppDispatch()
     return (
         <div onClick={() => setIsModal(true)}>
-            {
-                isModal ? <div>
-                    <div>evit</div>
-                    {event.description}
-                </div>: null
-            }
-            {event.title}
+            {eventTitle}
         </div>
     )
 })
-/* const Modal: React.FC<{description: string, unSetModal: () => void}> = ({description, unSetModal}) => {
-    return (
-        <div>
-            <span onClick={unSetModal}>evit</span>
-            {description}
-        </div>
-    )
-} */

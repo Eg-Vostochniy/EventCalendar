@@ -1,6 +1,8 @@
 import moment, { Moment } from 'moment'
+import { memo } from 'react'
 import styled from 'styled-components'
 import { IEvent } from '../../../models/IEvent'
+import { getCurrentDate } from '../../../utils/getCurrentDate'
 import { CellEvent } from './CellEvents'
 import { EventsAdder } from './EventsAdder'
 
@@ -52,12 +54,16 @@ const CellEventWrapper = styled.div`
     overflow-y: scroll;
 `
 
-export const CalendarCell: React.FC<{day: Moment, event?: IEvent[]}> = ({day, event}) => {
+const shallowEqual = (prevProps: any, nextProps: any) => {
+    return (prevProps.day._d !== nextProps.day._d) && (prevProps.event === nextProps.event)
+}
+
+export const CalendarCell: React.FC<{day: Moment, event?: IEvent[]}> = memo(({day, event}) => {
     const isCurrentDay = (): boolean => moment().isSame(day, 'day')
     const isCurrentMonth = (): boolean => moment().isSame(day, 'month')
     const isFirstDayOfMonth = (): string | null => {
-        if(day.format('D') === String(1)){
-            return day.format('MMM')
+        if(getCurrentDate(day, 'D') === String(1)){
+            return getCurrentDate(day, 'MMM')
         }
         return null
     }
@@ -69,11 +75,14 @@ export const CalendarCell: React.FC<{day: Moment, event?: IEvent[]}> = ({day, ev
             isCurrentMonth={isCurrentMonth() ? false : true}
         >
             <HeaderEvent>
-                <EventsAdder
-                    day={day} 
-                    isCurrentDay={isCurrentDay}
-                    isCurrentMonth={isCurrentMonth}
-                />
+                {
+                    day > moment() || isCurrentDay() ?
+                    <EventsAdder
+                        day={day} 
+                        isCurrentDay={isCurrentDay}
+                        isCurrentMonth={isCurrentMonth}
+                    /> : null
+                }
 
                 <RowInCell>
                     <DayWrapper 
@@ -88,9 +97,10 @@ export const CalendarCell: React.FC<{day: Moment, event?: IEvent[]}> = ({day, ev
 
             <CellEventWrapper>
                 {
-                    event && event.map(e => <CellEvent key={e.id} event={e}/>)
+                    event && event.map(e => <CellEvent key={e.id} eventTitle={e.title}/>)
                 }
             </CellEventWrapper>
         </Cell>
     )
-}
+// @ts-ignore: Unreachable code error
+}, shallowEqual)

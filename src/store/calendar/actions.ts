@@ -2,11 +2,12 @@ import { CalendarActionType } from './reducer';
 import { ThunkType } from './../index';
 import { eventsApi } from './../../api/eventsServices';
 import { IEvent } from "../../models/IEvent";
-import { SET_CURRENT_DATE, SET_EVENTS, SET_IS_MODAL, SET_NEW_EVENT } from "./types";
+import { SET_CURRENT_DATE, SET_EVENTS, SET_IS_MODAL_EVENTS_ADDER, SET_NEW_EVENT } from "./types";
 
 export const calendarActions = {
     setEvents: (payload: IEvent[]) => {return {type: SET_EVENTS, payload} as const},
-    setIsModal: (payload: boolean) => {return {type: SET_IS_MODAL, payload} as  const},
+    setIsModalEventsAdder: (payload: boolean) => {return {type: SET_IS_MODAL_EVENTS_ADDER, payload} as  const},
+    setIsModal: (payload: boolean) => {return {type: SET_IS_MODAL_EVENTS_ADDER, payload} as  const},
     setCurrentDate: (payload: string) => {return {type: SET_CURRENT_DATE, payload} as const},
     setNewEvent: (payload: IEvent) => {return {type: SET_NEW_EVENT, payload} as const}
 }

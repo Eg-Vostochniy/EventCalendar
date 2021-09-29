@@ -57,14 +57,14 @@ const users = [
     { id: 26, username: "user25"}
 ]
 const events = [
-    {id: 0, creator: 'user1', title: 'Event', description: 'fdsfdsfsffsdf', date: '09-22-2021', guests: ['user']},
-    {id: 1, creator: 'user1', title: 'Event', description: 'fdsfasdasddsfsffsdf', date: '08-15-2021', guests: ['user11', 'user20', 'user14']},
-    {id: 2, creator: 'user1', title: 'Event', description: 'fdsfdsfasdsffsdf', date: '08-30-2021', guests: ['user9', 'user17']},
-    {id: 3, creator: 'user1', title: 'Event', description: 'fdsfdsfasdsffsdf', date: '09-03-2021', guests: ['user20', 'user10']},
-    {id: 4, creator: 'user1', title: 'Event', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', guests: ['user5', 'user24']},
-    {id: 5, creator: 'user1', title: 'Event', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', guests: ['user5', 'user24']},
-    {id: 6, creator: 'user1', title: 'Event', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', guests: ['user5', 'user24']},
-    {id: 7, creator: 'user1', title: 'Event', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', guests: ['user5', 'user24']}
+    {id: 0, creator: 'user1', title: 'Evnt', description: 'fdsfdsfsffsdf', date: '09-29-2021', guests: ['user']},
+    {id: 1, creator: 'user1', title: 'dfg', description: 'fdsfasdasddsfsffsdf', date: '08-15-2021', guests: ['user11', 'user20', 'user14']},
+    {id: 2, creator: 'user1', title: 'Klds', description: 'fdsfdsfasdsffsdf', date: '08-30-2021', guests: ['user9', 'user17']},
+    {id: 3, creator: 'user1', title: 'Forus', description: 'fdsfdsfasdsffsdf', date: '09-03-2021', guests: ['user20', 'user10']},
+    {id: 4, creator: 'user1', title: 'hrlo', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', guests: ['user5', 'user24']},
+    {id: 5, creator: 'user1', title: 'bodmy', description: 'fdsfdsfasdsffsdf', date: '09-29-2021', guests: ['user5', 'user24']},
+    {id: 6, creator: 'user1', title: 'assrr', description: 'fdsfdsfasdsffsdf', date: '09-30-2021', guests: ['user5', 'user24']},
+    {id: 7, creator: 'user1', title: 'lkgdjfkg', description: 'fdsfdsfasdsffsdf', date: '10-5-2021', guests: ['user5', 'user24']}
 ]
 
 createServer({
@@ -97,7 +97,6 @@ createServer({
             let attrs = JSON.parse(request.requestBody)
             let id = events.length
             attrs && events.push(Object.assign(attrs, {id: id}))
-            console.log(events)
         })
     }
 })
