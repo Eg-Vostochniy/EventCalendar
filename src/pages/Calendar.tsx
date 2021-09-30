@@ -10,7 +10,7 @@ const totalDaysInGrid = 42
 
 export const Calendar: React.FC = () => {
     const [today, setToday] = useState(moment())
-    const {fetchEvents} = useAppDispatch()
+    const {fetchEvents, fetchUsers} = useAppDispatch()
     const {username} = useAppSelector(state => state.authReducer.owner)
     
     const currentMonth = getCurrentDate(today, 'MMMM')
@@ -21,6 +21,7 @@ export const Calendar: React.FC = () => {
     
     useEffect(() => {
         fetchEvents(username)
+        fetchUsers()
         //eslint-disable-next-line
     }, [username])
     

@@ -19,6 +19,7 @@ const HeaderEvent = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    min-height: 30px;
 `
 const RowInCell = styled.div`
     display: flex;
@@ -48,10 +49,9 @@ const DayWrapper = styled.div<{isCurrentDay: boolean, isFirstDay: boolean}>`
 `
 const CellEventWrapper = styled.div`
     max-width: 130px;
-    max-height: 40px;
+    max-height: 43px;
     margin: 3px;
-    font-size: 12px;
-    overflow-y: scroll;
+    overflow-y: auto;
 `
 
 const shallowEqual = (prevProps: any, nextProps: any) => {
@@ -97,7 +97,7 @@ export const CalendarCell: React.FC<{day: Moment, event?: IEvent[]}> = memo(({da
 
             <CellEventWrapper>
                 {
-                    event && event.map(e => <CellEvent key={e.id} eventTitle={e.title}/>)
+                    event && event.map(e => <CellEvent key={e.id} event={e}/>)
                 }
             </CellEventWrapper>
         </Cell>

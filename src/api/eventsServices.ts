@@ -12,5 +12,10 @@ export const eventsApi = {
             },
             body: JSON.stringify(event)
         })
+    },
+    deleteEvent: async (id: number) => {
+        return await fetch(`/api/events/${id}`, {
+            method: 'DELETE'
+        })
     }
 }

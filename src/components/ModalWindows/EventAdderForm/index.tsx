@@ -1,10 +1,10 @@
 import { Field, Form, Formik } from "formik"
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import styled from "styled-components"
-import { useAppDispatch } from "../../hooks/useAppDispatch"
-import { useAppSelector } from "../../hooks/useAppSelector"
-import { useClickOutside } from "../../hooks/useClickOutside"
-import { IEvent } from "../../models/IEvent"
+import { useAppDispatch } from "../../../hooks/useAppDispatch"
+import { useAppSelector } from "../../../hooks/useAppSelector"
+import { useClickOutside } from "../../../hooks/useClickOutside"
+import { IEvent } from "../../../models/IEvent"
 
 const Wrapper = styled.div`
     width: 250px;
@@ -17,14 +17,15 @@ const Wrapper = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 8px;
+    text-transform: uppercase;
 `
 const Container = styled.div`
     display: grid;
     padding: 8px;
 `
 const CloseModal = styled.div`
-    max-width: 15px;
-    max-height: 15px;
+    max-width: 20px;
+    max-height: 20px;
     font-size: 19px;
     font-weight: bold;
     cursor: pointer;
@@ -44,27 +45,23 @@ const Title = styled.span`
     font-weight: bold;
 `
 
-export const ModalWindow: React.FC<{}> = () => {
+export const EventAdderForm: React.FC<{}> = () => {
     const wrapperRef = useRef<HTMLDivElement>(null)
-    const {setIsModal, fetchUsers, addNewEvent} = useAppDispatch()
+    const {setIsModalEventsAdder, addNewEvent} = useAppDispatch()
     const {currentDate, events} = useAppSelector(state => state.calendarReducer)
     const {users, owner} = useAppSelector(state => state.authReducer)
 
-    useClickOutside(wrapperRef)
+    useClickOutside(wrapperRef, setIsModalEventsAdder)
 
     const submit = (values: IEvent) => {
         addNewEvent(values)
-        setIsModal(false)
+        setIsModalEventsAdder(false)
     }
-    useEffect(() => {
-        fetchUsers()
-        //eslint-disable-next-line
-    }, []) 
     
     return (
         <Wrapper ref={wrapperRef}>
             <Container>               
-                <CloseModal onClick={() => setIsModal(false)}>X</CloseModal>
+                <CloseModal onClick={() => setIsModalEventsAdder(false)}>X</CloseModal>
                 <Title>Add new event</Title>
                 <Formik
                 initialValues={{id: events.length, 
@@ -77,19 +74,21 @@ export const ModalWindow: React.FC<{}> = () => {
             >
                 <Form>
                     
-                    <Field type="input" name="title"/>
+                    <Field autoComplete='off' type="input" name="title"/>
                 
-                    <Field type="input" name="description" />
+                    <Field autoComplete='off' type="input" name="description" />
                     
                     <Field type="input" disabled name="date"/>
                 
                     <Field as="select" multiple name="guests">
                         {
-                            users && users.map(a => <option
-                                                        key={a.id} 
-                                                        value={a.username || undefined}
-                                                    >{a.username}
-                                                    </option>)
+                            users && owner && 
+                                users.map(a =>  
+                                    <option
+                                        key={a.id} 
+                                        value={a.username || undefined}
+                                    >{a.username}
+                                    </option>)
                         }
                     </Field>
                 

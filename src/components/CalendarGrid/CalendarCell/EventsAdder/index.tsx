@@ -37,10 +37,10 @@ type Props = {
 }
 
 export const EventsAdder: React.FC<Props> = ({isCurrentDay, isCurrentMonth, day}) => {
-    const {setIsModal, setCurrentDate} = useAppDispatch()
+    const {setIsModalEventsAdder, setCurrentDate} = useAppDispatch()
     
     const openEventModal = () => {
-        setIsModal(true)
+        setIsModalEventsAdder(true)
         setCurrentDate(getCurrentDate(day, 'MM-DD-YYYY'))
     }
     

@@ -23,6 +23,10 @@
   border: 2px solid rgb(46, 34, 34);
   outline: none;
 }
+input:-webkit-autofill {
+  color: black;
+  background-color: rgb(145, 142, 142);
+}
 .Wrapper button {
   background-color: rgb(121, 56, 56);
   border: 1px solid rgb(172, 166, 166);

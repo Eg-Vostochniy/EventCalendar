@@ -20,7 +20,7 @@ export const LoginForm: React.FC = () => {
                     <div className={styled.FormWrapper}>
                         <label className={styled.Label}>
                             <span>Username</span>
-                            <Field type="input" name="username"/>
+                            <Field autoComplete='off' type="input" name="username"/>
                         </label>
                         <label className={styled.Label}>
                             <span>Password</span>

@@ -1,9 +1,6 @@
 import { RefObject, useEffect } from "react"
-import { useAppDispatch } from "./useAppDispatch"
 
-export const useClickOutside = (ref: RefObject<HTMLDivElement>) => {
-    const {setIsModal} = useAppDispatch()
-
+export const useClickOutside = (ref: RefObject<HTMLDivElement>, setIsModal: (b: boolean) => void) => {
     useEffect(() => {
         function handleClickOutside(event: any) {
             if (ref.current && !ref.current.contains(event.target)) {

@@ -56,7 +56,7 @@ const users = [
     { id: 25, username: "user24"},
     { id: 26, username: "user25"}
 ]
-const events = [
+let events = [
     {id: 0, creator: 'user1', title: 'Evnt', description: 'fdsfdsfsffsdf', date: '09-29-2021', guests: ['user']},
     {id: 1, creator: 'user1', title: 'dfg', description: 'fdsfasdasddsfsffsdf', date: '08-15-2021', guests: ['user11', 'user20', 'user14']},
     {id: 2, creator: 'user1', title: 'Klds', description: 'fdsfdsfasdsffsdf', date: '08-30-2021', guests: ['user9', 'user17']},
@@ -66,7 +66,7 @@ const events = [
     {id: 6, creator: 'user1', title: 'assrr', description: 'fdsfdsfasdsffsdf', date: '09-30-2021', guests: ['user5', 'user24']},
     {id: 7, creator: 'user1', title: 'lkgdjfkg', description: 'fdsfdsfasdsffsdf', date: '10-5-2021', guests: ['user5', 'user24']}
 ]
-
+console.log(events)
 createServer({
     routes() {
         this.namespace = "api"    
@@ -97,6 +97,14 @@ createServer({
             let attrs = JSON.parse(request.requestBody)
             let id = events.length
             attrs && events.push(Object.assign(attrs, {id: id}))
+        })
+        this.delete('/events/:id', (_, request) => {
+            let {id} = request.params
+            events.filter(e => {
+                if(e.id !== id) return e
+                return null
+            })
+            console.log(events)
         })
     }
 })
