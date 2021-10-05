@@ -7,7 +7,7 @@ import { useClickOutside } from "../../../hooks/useClickOutside"
 const Wrapper = styled.div`
     width: 350px;
     max-height: 500px;
-    background-color: #999393;
+    background-color: #999393ef;
     box-shadow: 0 3px 8px 2px #494949f8;;
     z-index: 10;
     position: absolute;
@@ -105,10 +105,11 @@ export const EventDescription: React.FC = () => {
     const wrapperRef = useRef<HTMLDivElement>(null)
     const {setIsModalEvent, deleteEvent} = useAppDispatch()
     const {currentEvent} = useAppSelector(state => state.calendarReducer)
+    const {username} = useAppSelector(state => state.authReducer.owner)
     
     useClickOutside(wrapperRef, setIsModalEvent)
     const handleClick = () => {
-        deleteEvent(currentEvent.id)
+        deleteEvent(currentEvent.id, username)
         setIsModalEvent(false)
     }
 

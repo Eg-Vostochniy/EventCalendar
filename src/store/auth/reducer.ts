@@ -1,12 +1,13 @@
 import { IUser } from './../../models/IUser'
-import { SET_IS_AUTH, SET_USERS, SET_OWNER } from './types'
+import { SET_IS_AUTH, SET_USERS, SET_OWNER, SET_IS_FETCHING } from './types'
 import { authActions } from './actions'
 import { ReturnActionsTypes } from './../index'
 
 let initialState = {
     isAuth: false,
     users: [] as IUser[],
-    owner: {} as {username: string | null, password: string | null}
+    owner: {} as {username: string | null, password: string | null},
+    isFetching: false
 }
 
 type InitialState = typeof initialState
@@ -20,6 +21,8 @@ export const authReducer = (state = initialState, action: AuthActionType): Initi
             return {...state, users: action.payload}
         case SET_OWNER:
             return {...state, owner: action.payload}
+        case SET_IS_FETCHING:
+            return {...state, isFetching: action.payload}
 
         default: return state
     }

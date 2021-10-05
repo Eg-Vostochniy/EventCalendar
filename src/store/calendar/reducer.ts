@@ -1,4 +1,4 @@
-import { SET_CURRENT_DATE, SET_CURRENT_EVENT, SET_EVENTS, SET_IS_MODAL_EVENT, SET_IS_MODAL_EVENTS_ADDER, SET_NEW_EVENT } from './types'
+import { SET_CURRENT_DATE, SET_CURRENT_EVENT, SET_EVENTS, SET_IS_FETCHING, SET_IS_MODAL_EVENT, SET_IS_MODAL_EVENTS_ADDER, SET_NEW_EVENT } from './types'
 import { calendarActions } from './actions'
 import { ReturnActionsTypes } from './../index'
 import { IEvent } from './../../models/IEvent'
@@ -8,7 +8,8 @@ let initialState = {
     isModalEventsAdder: false,
     isModalEvent: false,
     currentDate: '',
-    currentEvent: {} as IEvent
+    currentEvent: {} as IEvent,
+    isFetching: false
 }
 
 type InitialState = typeof initialState
@@ -28,6 +29,9 @@ export const calendarReducer = (state = initialState, action: CalendarActionType
             return {...state, events: [...state.events, action.payload]}
         case SET_CURRENT_EVENT:
             return {...state, currentEvent: action.payload}
+        case SET_IS_FETCHING:
+            return {...state, isFetching: action.payload}
+            
         default: return state
     }
 }

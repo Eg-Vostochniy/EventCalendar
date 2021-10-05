@@ -1,11 +1,8 @@
-import moment from 'moment'
 import { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useAppSelector } from '../../../hooks/useAppSelector'
-import { useAppDispatch } from '../../../hooks/useAppDispatch'
-import { getCurrentDate } from '../../../utils/getCurrentDate'
-import { IEvent } from '../../../models/IEvent'
 import { useClickOutside } from '../../../hooks/useClickOutside'
+import { SearchList } from './SearchList'
 
 const Input = styled.input`
     background-color: #404040;
@@ -21,18 +18,14 @@ const SearchedEvents = styled.div`
     color: black;
     background-color: #ffffffa8;
     position: absolute;
-    width: 160px;
+    width: 165px;
     max-height: 170px;
     overflow: auto;
     z-index: 6;
     top: 12%;
-    right: 3%;
+    right: 7.1%;
     padding: 4px;
     border-radius: 5px;
-`
-const EventDiv = styled.div<{isAvailable?: boolean}>`
-    ${props => props.isAvailable && `color: #921a1a;`}
-    cursor: pointer;
 `
 const NoEvent = styled.div`
     font-size: 11.5px;
@@ -41,55 +34,59 @@ const NoEvent = styled.div`
     font-weight: 600;
     text-align: center;
 `
+const CheckAllLabel = styled.label`
+    margin-right: 10px;
+    & span{
+        color: #964444;
+        padding-left: 5px;
+    }
+`
 
 export const Search: React.FC = () => {
     const [searchValue, setSearchValue] = useState('')
     const [isOpen, setIsOpen] = useState(false)
+    const [isAllEvents, setIsAllEvents] = useState(false)
     
-    const {setIsModalEvent, setCurrentEvent} = useAppDispatch()
     const wrapperRef = useRef(null)
+    useClickOutside(wrapperRef, setIsOpen)
     const {events} = useAppSelector(state => state.calendarReducer)
 
-    const filteredEvents = events.filter(e => e.title.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1)
-    useClickOutside(wrapperRef, setIsOpen)
-
-    const handleClick = (event: IEvent) => {
-        setCurrentEvent(event)
-        setIsModalEvent(true)
-    }
+    const filteredEvents = events.filter(e => e.title.toLowerCase()
+        .indexOf(searchValue.toLowerCase()) !== -1)
     
     return (
         <>
-            <Input
-                onClick={() => setIsOpen(true)}
-                placeholder='Search'  
-                value={searchValue}
-                onChange={e => setSearchValue(e.target.value)}
-            />
+            <div>
+                <Input
+                    onClick={() => setIsOpen(true)}
+                    placeholder='Search'  
+                    value={searchValue}
+                    disabled={isAllEvents}
+                    onChange={e => setSearchValue(e.target.value)}
+                />
+                <CheckAllLabel>
+                    <input 
+                        type='checkbox'
+                        checked={isAllEvents}
+                        onClick={() => setIsAllEvents(!isAllEvents)}     
+                    />
+                    <span>All</span>
+                </CheckAllLabel>
+            </div>
             {
-                searchValue !== '' && isOpen &&
-                <SearchedEvents ref={wrapperRef}>
-                    {
-                        filteredEvents.length !== 0 ?
-                            filteredEvents.map(e => {
-                                return Number(e.date.split('-').join('')) < Number(getCurrentDate(moment(), 'MMDDYYYY')) ?
-                                    <EventDiv 
-                                        isAvailable 
-                                        key={e.id}
-                                        onClick={() => handleClick(e)}
-                                    >
-                                        {e.title}
-                                    </EventDiv> :
-                                    <EventDiv 
-                                        key={e.id} 
-                                        onClick={() => handleClick(e)}
-                                    >
-                                        {e.title}
-                                    </EventDiv>
-                            }) :
-                            <NoEvent>No events with this name</NoEvent> 
-                    }
-                </SearchedEvents>
+                isAllEvents ?
+                    <SearchedEvents> 
+                        {events.map(e => <SearchList event={e}/>)}
+                    </SearchedEvents>:
+                    searchValue !== '' && isOpen && 
+                    <SearchedEvents ref={wrapperRef}>              
+                        {
+                            filteredEvents.length !== 0 ?
+                                filteredEvents.map(e => <SearchList event={e}/>) :
+                                <NoEvent>No events with this name</NoEvent>
+                        }
+                    </SearchedEvents>
+                    
             }
         </>
     )

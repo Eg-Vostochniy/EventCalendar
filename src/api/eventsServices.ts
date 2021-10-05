@@ -1,7 +1,7 @@
 import { IEvent } from './../models/IEvent'
 
 export const eventsApi = {
-    getCurrentMonthEvents: async (username: string | null): Promise<IEvent[]> => {
+    getCurrentUserEvents: async (username: string | null): Promise<IEvent[]> => {
         return await (await fetch(`/api/events/${username}`)).json()
     },
     addNewEvent: async (event: IEvent) => {
@@ -13,8 +13,8 @@ export const eventsApi = {
             body: JSON.stringify(event)
         })
     },
-    deleteEvent: async (id: number) => {
-        return await fetch(`/api/events/${id}`, {
+    deleteEvent: async (id: number, deleter: string | null) => {
+        return await fetch(`/api/events/${id}/${deleter}`, {
             method: 'DELETE'
         })
     }

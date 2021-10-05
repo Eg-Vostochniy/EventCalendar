@@ -64,9 +64,8 @@ let events = [
     {id: 4, creator: 'user1', title: 'hrlo', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', guests: ['user5', 'user24']},
     {id: 5, creator: 'user1', title: 'bodmy', description: 'fdsfdsfasdsffsdf', date: '09-29-2021', guests: ['user5', 'user24']},
     {id: 6, creator: 'user1', title: 'assrr', description: 'fdsfdsfasdsffsdf', date: '09-30-2021', guests: ['user5', 'user24']},
-    {id: 7, creator: 'user1', title: 'lkgdjfkg', description: 'fdsfdsfasdsffsdf', date: '10-5-2021', guests: ['user5', 'user24']}
+    {id: 7, creator: 'user1', title: 'lkgdjfkg', description: 'fdsfdsfasdsffsdf', date: '10-05-2021', guests: ['user5', 'user24']}
 ]
-console.log(events)
 createServer({
     routes() {
         this.namespace = "api"    
@@ -82,9 +81,6 @@ createServer({
         })
         this.get('/events/:username', (_, request) => {
             let {username} = request.params
-            //from = events.find((f) => f.date <= from)
-            //to = events.find((t) => t.date >= to)
-            //let slicedEvents = events.slice(from.id, to.id + 1)
             let userEvents = events.filter((e) => {
                 if(e.guests.find((h) => h === username) || e.creator === username){
                     return e
@@ -95,16 +91,25 @@ createServer({
         })
         this.post('/events', (_, request) => {
             let attrs = JSON.parse(request.requestBody)
-            let id = events.length
+            let id = events[events.length - 1].id + 1
             attrs && events.push(Object.assign(attrs, {id: id}))
         })
-        this.delete('/events/:id', (_, request) => {
-            let {id} = request.params
-            events.filter(e => {
-                if(e.id !== id) return e
+        this.delete('/events/:id/:deleter', (_, request) => {
+            let {id, deleter} = request.params
+            events = events.filter(e => {
+                if(e.id !== Number(id)) return e
+                if(e.id === Number(id) && 
+                    e.creator !== deleter && 
+                    e.guests.find(g => g === deleter)
+                ){
+                    e.guests = e.guests.filter(g => {
+                        if(g !== deleter) return g
+                        return null
+                    })
+                    return e
+                }                   
                 return null
             })
-            console.log(events)
         })
     }
 })

@@ -8,9 +8,9 @@ import { IEvent } from "../../../models/IEvent"
 
 const Wrapper = styled.div`
     width: 250px;
-    height: 300px;
-    background-color: #999393;
-    box-shadow: 0 3px 8px 2px #494949f8;;
+    height: 370px;
+    background-color: #999393ef;
+    box-shadow: 0 3px 8px 2px #494949f8;
     z-index: 10;
     position: absolute;
     top: 50%;
@@ -21,7 +21,29 @@ const Wrapper = styled.div`
 `
 const Container = styled.div`
     display: grid;
-    padding: 8px;
+    padding: 8px 15px;
+    & label{
+        display: grid;
+        margin-bottom: 10px;
+        color: #2b2a2c;
+    }
+    & input{
+        padding: 4px;
+        background-color: rgb(145, 142, 142);
+        border: 2px solid rgb(46, 34, 34);
+        outline: none;
+        color: #232224;
+    }
+    & button{
+        background-color: rgb(121, 56, 56);
+        border: 1px solid rgb(172, 166, 166);
+        border-radius: 2px;
+        outline: none;
+        cursor: pointer;
+        color: #232224;
+        font-size: 16px;
+        padding: 1px 9px;
+    }
 `
 const CloseModal = styled.div`
     max-width: 20px;
@@ -44,8 +66,12 @@ const Title = styled.span`
     text-align: center;
     font-weight: bold;
 `
+const UserOption = styled.option`
+    color: #232224;
+    background-color: rgb(145, 142, 142);
+`
 
-export const EventAdderForm: React.FC<{}> = () => {
+export const EventAdderForm: React.FC = () => {
     const wrapperRef = useRef<HTMLDivElement>(null)
     const {setIsModalEventsAdder, addNewEvent} = useAppDispatch()
     const {currentDate, events} = useAppSelector(state => state.calendarReducer)
@@ -73,29 +99,35 @@ export const EventAdderForm: React.FC<{}> = () => {
                 onSubmit={submit}
             >
                 <Form>
-                    
-                    <Field autoComplete='off' type="input" name="title"/>
-                
-                    <Field autoComplete='off' type="input" name="description" />
-                    
-                    <Field type="input" disabled name="date"/>
-                
-                    <Field as="select" multiple name="guests">
+                    <label>
+                        <span>Title</span>               
+                        <Field autoComplete='off' type="input" name="title"/>
+                    </label>
+                    <label>
+                        <span>Description</span>               
+                        <Field autoComplete='off' type="input" name="description"/>
+                    </label>
+                    <label>
+                        <span>Date</span>               
+                        <Field type="input" disabled name="date"/>
+                    </label>
+                    <label>
+                        <span>Add guests</span>               
+                        <Field as="select" multiple name="guests">
                         {
-                            users && owner && 
-                                users.map(a =>  
-                                    <option
-                                        key={a.id} 
-                                        value={a.username || undefined}
-                                    >{a.username}
-                                    </option>)
+                            users && owner && users.map(u => 
+                                    <UserOption
+                                        key={u.id} 
+                                        value={u.username || undefined}
+                                    >{u.username}
+                                    </UserOption>)
                         }
-                    </Field>
-                
+                        </Field>
+                    </label>                                                      
+                        
                     <button type="submit">
                         Submit
-                    </button>
-                    
+                    </button>             
                 </Form>
             </Formik>
             </Container>
