@@ -57,14 +57,9 @@ const users = [
     { id: 26, username: "user25"}
 ]
 let events = [
-    {id: 0, creator: 'user1', title: 'Evnt', description: 'fdsfdsfsffsdf', date: '09-29-2021', guests: ['user']},
-    {id: 1, creator: 'user1', title: 'dfg', description: 'fdsfasdasddsfsffsdf', date: '08-15-2021', guests: ['user11', 'user20', 'user14']},
-    {id: 2, creator: 'user1', title: 'Klds', description: 'fdsfdsfasdsffsdf', date: '08-30-2021', guests: ['user9', 'user17']},
-    {id: 3, creator: 'user1', title: 'Forus', description: 'fdsfdsfasdsffsdf', date: '09-03-2021', guests: ['user20', 'user10']},
-    {id: 4, creator: 'user1', title: 'hrlo', description: 'fdsfdsfasdsffsdf', date: '09-22-2021', guests: ['user5', 'user24']},
-    {id: 5, creator: 'user1', title: 'bodmy', description: 'fdsfdsfasdsffsdf', date: '09-29-2021', guests: ['user5', 'user24']},
-    {id: 6, creator: 'user1', title: 'assrr', description: 'fdsfdsfasdsffsdf', date: '09-30-2021', guests: ['user5', 'user24']},
-    {id: 7, creator: 'user1', title: 'lkgdjfkg', description: 'fdsfdsfasdsffsdf', date: '10-05-2021', guests: ['user5', 'user24']}
+    {id: 0, creator: 'user1', title: 'Buy new phone', description: '', date: '09-29-2021', guests: ['user']},
+    {id: 1, creator: 'user5', title: 'Buy a gift for a dad', description: 'Go with mom to the mall and choose a birthday present for dad', date: '08-15-2021', guests: ['user11', 'user20', 'user14']},
+    {id: 2, creator: 'user1', title: 'Go to sea', description: 'Choose between Egypt and Dubai', date: '10-15-2021', guests: ['']},
 ]
 createServer({
     routes() {

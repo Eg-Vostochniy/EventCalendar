@@ -1,11 +1,11 @@
-import { ErrorMessage, Field, Form, Formik } from "formik"
+import { Field, Form, Formik } from "formik"
 import { useAppDispatch } from "../../hooks/useAppDispatch"
 import { useAppSelector } from "../../hooks/useAppSelector"
 import styled from './LoginForm.module.css'
 
 export const LoginForm: React.FC = () => {
     const {login} = useAppDispatch()
-    const {isFetching} = useAppSelector(state => state.authReducer)
+    const {authError} = useAppSelector(state => state.authReducer)
 
     const submit = (values: {username: string | null, password: string | null}) => {
         login(values.username, values.password)
@@ -28,16 +28,12 @@ export const LoginForm: React.FC = () => {
                             <Field type="password" name="password" />
                         </label>
                     </div>
-                    <ErrorMessage name="password" component='div' />
                     <div className={styled.ButtonWrapper}>
+                        <div className={styled.Error}>{authError}</div>
                         <button 
                             type="submit"
-                            disabled={isFetching}
                         >
-                            Submit
-                            {
-                                isFetching && <span>Load</span>
-                            }
+                            Submit                       
                         </button>
                     </div>
                 </Form>

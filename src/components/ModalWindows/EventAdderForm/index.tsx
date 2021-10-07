@@ -30,9 +30,10 @@ const Container = styled.div`
     & input{
         padding: 4px;
         background-color: rgb(145, 142, 142);
-        border: 2px solid rgb(46, 34, 34);
+        border: 1px solid rgb(46, 34, 34);
         outline: none;
         color: #232224;
+        box-shadow: 0 2px 4px 2px #686868f8;
     }
     & button{
         background-color: rgb(121, 56, 56);
@@ -90,18 +91,22 @@ export const EventAdderForm: React.FC = () => {
                 <CloseModal onClick={() => setIsModalEventsAdder(false)}>X</CloseModal>
                 <Title>Add new event</Title>
                 <Formik
-                initialValues={{id: events.length, 
-                                title: '', 
-                                creator: owner.username, 
-                                description: '', 
-                                date: currentDate, 
-                                guests: ['']}}
-                onSubmit={submit}
-            >
+                    initialValues={{id: events.length, 
+                                    title: '', 
+                                    creator: owner.username, 
+                                    description: '', 
+                                    date: currentDate, 
+                                    guests: ['']}}
+                    onSubmit={submit}
+                >
                 <Form>
                     <label>
                         <span>Title</span>               
-                        <Field autoComplete='off' type="input" name="title"/>
+                        <Field 
+                            autoComplete='off' 
+                            type="input" 
+                            name="title"
+                        />
                     </label>
                     <label>
                         <span>Description</span>               
